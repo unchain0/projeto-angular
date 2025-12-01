@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import { Title } from '../../components/shared/title/title';
 
 @Component({
@@ -9,6 +9,21 @@ import { Title } from '../../components/shared/title/title';
 })
 export class Counter {
   count = signal(0);
+
+  constructor() {
+    const stored = localStorage.getItem('counter');
+    if (stored !== null) {
+      const value = Number(stored);
+      if (!Number.isNaN(value)) {
+        this.count.set(value);
+      }
+    }
+
+    effect(() => {
+      const value = this.count();
+      localStorage.setItem('counter', value.toString());
+    });
+  }
 
   increment() {
     this.count.update((value) => value + 1);
