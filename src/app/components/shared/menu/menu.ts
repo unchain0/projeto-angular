@@ -3,7 +3,6 @@ import { MenuItem } from '../menu-item/menu-item';
 
 @Component({
   selector: 'app-menu',
-  standalone: true,
   imports: [MenuItem],
   templateUrl: './menu.html',
   styleUrl: './menu.css',
