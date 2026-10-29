@@ -28,10 +28,12 @@ jobs:
           cache: npm
 
       - name: Enable packageManager npm
-        run: corepack enable
+        run: |
+          corepack enable
+          corepack prepare --activate
 
       - name: Install dependencies
-        run: npm ci
+        run: corepack npm ci
 
       - name: Build
-        run: npm run build
+        run: corepack npm run build
