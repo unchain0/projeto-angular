@@ -17,6 +17,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+      # package-lock.json is resolved by npm 11 (package.json "packageManager"); npm 10 rejects it in `npm ci`.
+      - run: npm install -g npm@11.6.4
       - run: npm ci
       - run: npm run build
