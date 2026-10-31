@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # package-lock.json is resolved by npm 11 (package.json "packageManager"); npm 10 rejects it in `npm ci`.
+      - run: npm install -g npm@11.6.4
+      - run: npm ci
+      - run: npm run build
